@@ -1,0 +1,118 @@
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-lg);
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.toolbar-group {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--glass-border);
+}
+
+.toolbar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    background: transparent;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.toolbar-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: -1;
+}
+
+.toolbar-btn:hover {
+    color: var(--color-text-primary);
+    transform: translateY(-2px);
+    background: var(--color-border);
+}
+
+.toolbar-btn:active {
+    transform: translateY(0);
+}
+
+.toolbar-btn.active {
+    color: var(--color-text-primary);
+    background: var(--color-border-hover);
+    box-shadow: var(--shadow-glow);
+}
+
+.toolbar-btn.active::before {
+    opacity: 0.2;
+}
+
+.toolbar-btn svg {
+    width: 20px;
+    height: 20px;
+    transition: transform var(--transition-fast);
+}
+
+.toolbar-btn:hover svg {
+    transform: scale(1.1);
+}
+
+/* Tooltip effect */
+.toolbar-btn::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--transition-base);
+    z-index: 10;
+    border: 1px solid var(--glass-border);
+}
+
+.toolbar-btn:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .toolbar {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+    }
+
+    .toolbar-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .toolbar-btn::after {
+        display: none;
+    }
+}
