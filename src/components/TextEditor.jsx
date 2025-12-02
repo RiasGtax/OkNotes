@@ -1,6 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import Toolbar from './Toolbar';
 import './TextEditor.css';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import htmlToPdfmake from 'html-to-pdfmake';
+
+// Try to assign vfs from different possible locations in the imported object
+if (pdfFonts && pdfFonts.pdfMake && pdfFonts.pdfMake.vfs) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+} else if (pdfFonts && pdfFonts.vfs) {
+    pdfMake.vfs = pdfFonts.vfs;
+}
+
+
 
 function TextEditor() {
     const editorRef = useRef(null);
@@ -72,6 +84,36 @@ function TextEditor() {
         }
     };
 
+
+
+    const htmlToPdfmakeDefinition = (html) => {
+        const ret = htmlToPdfmake(html);
+        return ret;
+    };
+
+    const getFormattedDateTime = () => {
+        const now = new Date();
+
+        const dd = String(now.getDate()).padStart(2, '0');
+        const mm = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const yyyy = now.getFullYear();
+
+        const hh = String(now.getHours()).padStart(2, '0');
+        const min = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+
+        return `${dd}-${mm}-${yyyy}-${hh}-${min}-${ss}`;
+    }
+
+    const exportToPdf = () => {
+        const html = editorRef.current?.innerHTML;
+        const content = htmlToPdfmakeDefinition(html);
+        const docDefinition = {
+            content: content
+        };
+        pdfMake.createPdf(docDefinition).download(getFormattedDateTime() + '.pdf');
+    }
+
     // Update state when selection changes
     useEffect(() => {
         const handleSelectionChange = () => {
@@ -89,6 +131,7 @@ function TextEditor() {
     return (
         <div className="text-editor-container animate-fade-in">
             <Toolbar
+                exportToPdf={exportToPdf}
                 isBold={isBold}
                 isItalic={isItalic}
                 alignment={alignment}

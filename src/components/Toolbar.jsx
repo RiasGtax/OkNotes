@@ -1,8 +1,32 @@
 import './Toolbar.css';
 
-function Toolbar({ isBold, isItalic, alignment, onBold, onItalic, onAlign }) {
+function Toolbar({ exportToPdf, isBold, isItalic, alignment, onBold, onItalic, onAlign }) {
     return (
         <div className="toolbar glass">
+            <div className="toolbar-group export-group">
+                <button
+                    className="toolbar-btn export-btn"
+                    onClick={exportToPdf}
+                    title="Export to PDF"
+                    aria-label="Export to PDF"
+                >
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="var(--color-accent-primary)" stopOpacity="1" />
+                                <stop offset="50%" stopColor="var(--color-accent-secondary)" stopOpacity="1" />
+                                <stop offset="100%" stopColor="var(--color-accent-tertiary)" stopOpacity="1" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="32" height="32" rx="6" fill="url(#gradient)" />
+                        <path d="M18 6H10C9.46957 6 8.96086 6.21071 8.58579 6.58579C8.21071 6.96086 8 7.46957 8 8V24C8 24.5304 8.21071 25.0391 8.58579 25.4142C8.96086 25.7893 9.46957 26 10 26H22C22.5304 26 23.0391 25.7893 23.4142 25.4142C23.7893 25.0391 24 24.5304 24 24V12L18 6Z" fill="white" />
+                        <path d="M18 6V12H24" fill="white" opacity="0.7" />
+                        <line x1="20" y1="17" x2="12" y2="17" stroke="url(#gradient)" strokeWidth="1.5" strokeLinecap="round" />
+                        <line x1="20" y1="21" x2="12" y2="21" stroke="url(#gradient)" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                </button>
+            </div>
+            <div className="toolbar-divider"></div>
             <div className="toolbar-group">
                 <button
                     className={`toolbar-btn ${isBold ? 'active' : ''}`}

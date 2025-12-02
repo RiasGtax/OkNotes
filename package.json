@@ -13,6 +13,8 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "html-to-pdfmake": "^2.5.32",
+    "pdfmake": "^0.2.20",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
