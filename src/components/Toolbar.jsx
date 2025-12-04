@@ -1,6 +1,6 @@
 import './Toolbar.css';
 
-function Toolbar({ exportToPdf, isBold, isItalic, alignment, onBold, onItalic, onAlign }) {
+function Toolbar({ exportToPdf, isBold, isItalic, isUnderline, alignment, onBold, onItalic, onUnderline, onAlign }) {
     return (
         <div className="toolbar glass">
             <div className="toolbar-group export-group">
@@ -24,6 +24,7 @@ function Toolbar({ exportToPdf, isBold, isItalic, alignment, onBold, onItalic, o
                         <line x1="20" y1="17" x2="12" y2="17" stroke="url(#gradient)" strokeWidth="1.5" strokeLinecap="round" />
                         <line x1="20" y1="21" x2="12" y2="21" stroke="url(#gradient)" strokeWidth="1.5" strokeLinecap="round" />
                     </svg>
+                    <span className="toolbar-btn-text">Export to PDF</span>
                 </button>
             </div>
             <div className="toolbar-divider"></div>
@@ -50,6 +51,18 @@ function Toolbar({ exportToPdf, isBold, isItalic, alignment, onBold, onItalic, o
                         <line x1="19" y1="4" x2="10" y2="4"></line>
                         <line x1="14" y1="20" x2="5" y2="20"></line>
                         <line x1="15" y1="4" x2="9" y2="20"></line>
+                    </svg>
+                </button>
+
+                <button
+                    className={`toolbar-btn ${isUnderline ? 'active' : ''}`}
+                    onClick={onUnderline}
+                    title="Underline (Ctrl+U)"
+                    aria-label="Toggle underline"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"></path>
+                        <line x1="4" y1="21" x2="20" y2="21"></line>
                     </svg>
                 </button>
             </div>

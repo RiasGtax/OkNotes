@@ -13,6 +13,10 @@
     gap: var(--space-xs);
 }
 
+.export-group {
+    margin-right: var(--space-lg);
+}
+
 .toolbar-divider {
     width: 1px;
     height: 24px;
@@ -21,10 +25,12 @@
 
 .toolbar-btn {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    gap: 2px;
+    width: 60px;
+    height: 52px;
     border-radius: var(--radius-md);
     color: var(--color-text-secondary);
     background: transparent;
@@ -96,6 +102,16 @@
 .toolbar-btn:hover::after {
     opacity: 1;
     transform: translateX(-50%) scale(1);
+}
+
+.toolbar-btn-text {
+    display: block;
+    font-size: 10px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    transition: all var(--transition-base);
+    line-height: 1;
+    margin-top: 2px;
 }
 
 /* Responsive */

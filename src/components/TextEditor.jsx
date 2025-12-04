@@ -12,12 +12,11 @@ if (pdfFonts && pdfFonts.pdfMake && pdfFonts.pdfMake.vfs) {
     pdfMake.vfs = pdfFonts.vfs;
 }
 
-
-
 function TextEditor() {
     const editorRef = useRef(null);
     const [isBold, setIsBold] = useState(false);
     const [isItalic, setIsItalic] = useState(false);
+    const [isUnderline, setIsUnderline] = useState(false);
     const [alignment, setAlignment] = useState('left');
 
     // Update formatting state based on current selection
@@ -35,6 +34,10 @@ function TextEditor() {
         const italic = document.queryCommandState('italic');
         setIsItalic(italic);
 
+        // Check underline state
+        const underline = document.queryCommandState('underline');
+        setIsUnderline(underline);
+
         // Check alignment
         const alignments = ['left', 'center', 'right', 'justify'];
         for (const align of alignments) {
@@ -45,21 +48,29 @@ function TextEditor() {
         }
     };
 
-    // Handle formatting commands
+    // Handle formatting commands  
     const applyFormat = (command, value = null) => {
         document.execCommand(command, false, value);
         editorRef.current?.focus();
         updateFormattingState();
     };
 
+    // Toggle bold
     const toggleBold = () => {
         applyFormat('bold');
     };
 
+    // Toggle italic    
     const toggleItalic = () => {
         applyFormat('italic');
     };
 
+    // Toggle underline
+    const toggleUnderline = () => {
+        applyFormat('underline');
+    };
+
+    // Set text alignment
     const setTextAlignment = (align) => {
         const alignmentCommands = {
             left: 'justifyLeft',
@@ -80,17 +91,20 @@ function TextEditor() {
             } else if (e.key === 'i') {
                 e.preventDefault();
                 toggleItalic();
+            } else if (e.key === 'u') {
+                e.preventDefault();
+                toggleUnderline();
             }
         }
     };
 
-
-
+    // HTML to PDFMake conversion
     const htmlToPdfmakeDefinition = (html) => {
         const ret = htmlToPdfmake(html);
         return ret;
     };
 
+    // Get formatted date and time
     const getFormattedDateTime = () => {
         const now = new Date();
 
@@ -105,6 +119,7 @@ function TextEditor() {
         return `${dd}-${mm}-${yyyy}-${hh}-${min}-${ss}`;
     }
 
+    // Export to PDF
     const exportToPdf = () => {
         const html = editorRef.current?.innerHTML;
         const content = htmlToPdfmakeDefinition(html);
@@ -122,6 +137,8 @@ function TextEditor() {
             }
         };
 
+        // Add event listener for selection changes
+        // This is used to update the formatting state when the user selects text
         document.addEventListener('selectionchange', handleSelectionChange);
         return () => {
             document.removeEventListener('selectionchange', handleSelectionChange);
@@ -134,9 +151,11 @@ function TextEditor() {
                 exportToPdf={exportToPdf}
                 isBold={isBold}
                 isItalic={isItalic}
+                isUnderline={isUnderline}
                 alignment={alignment}
                 onBold={toggleBold}
                 onItalic={toggleItalic}
+                onUnderline={toggleUnderline}
                 onAlign={setTextAlignment}
             />
 
@@ -155,6 +174,7 @@ function TextEditor() {
                 <ul>
                     <li><strong>Ctrl+B</strong> for bold</li>
                     <li><strong>Ctrl+I</strong> for italic</li>
+                    <li><strong>Ctrl+U</strong> for underline</li>
                 </ul>
                 <p>Click the alignment buttons to change text alignment. Start typing to replace this text with your own thoughts!</p>
             </div>
