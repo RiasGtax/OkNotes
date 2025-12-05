@@ -1,3 +1,12 @@
+.toolbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xl);
+    width: fit-content;
+    margin: 0 auto;
+}
+
 .toolbar {
     display: flex;
     align-items: center;
@@ -5,16 +14,11 @@
     padding: var(--space-md) var(--space-lg);
     border-radius: var(--radius-lg);
     width: fit-content;
-    margin: 0 auto;
 }
 
 .toolbar-group {
     display: flex;
     gap: var(--space-xs);
-}
-
-.export-group {
-    margin-right: var(--space-lg);
 }
 
 .toolbar-divider {
@@ -45,7 +49,6 @@
     inset: 0;
     background: var(--gradient-primary);
     opacity: 0;
-    transition: opacity var(--transition-base);
     z-index: -1;
 }
 
@@ -79,6 +82,17 @@
     transform: scale(1.1);
 }
 
+/* Export button specific styles */
+.export-btn {
+    width: auto;
+    min-width: 100px;
+    background: var(--glass-bg);
+}
+
+.export-btn:hover {
+    box-shadow: var(--shadow-glow);
+}
+
 /* Tooltip effect */
 .toolbar-btn::after {
     content: attr(title);
@@ -106,7 +120,7 @@
 
 .toolbar-btn-text {
     display: block;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
     transition: all var(--transition-base);
